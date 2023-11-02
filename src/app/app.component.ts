@@ -1,56 +1,23 @@
-import { Component } from '@angular/core';
-import {AdvantagesTypes} from "./types/advantages.types";
+import {Component, OnInit} from '@angular/core';
 import {ProductType} from "./types/product.type";
+import {ProductService} from "./services/product.service";
+import {CounterService} from "./services/counter.service";
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers:[ProductService]
 })
-export class AppComponent {
-  public advantages:AdvantagesTypes[] = [
-    {
-      title: "Лучшие продукты",
-      text: "Мы честно готовим макаруны только из натуральных и качественных продуктов. Мы не используем консерванты, ароматизаторы и красители."
-    },
-    {
-      title: "Много вкусов",
-      text: "Наша задача – предоставить вам широкое разнобразие вкусов. Вы удивитесь, но у нас более 70 вкусов пироженок."
-    },
-    {
-      title: "Бисквитное тесто",
-      text: "Все пирожные готовятся на бисквитном тесте с  качественным сливочным маслом 82,5%. В составе нет маргарина и дрожжей!"
-    },
-    {
-      title: "Честный продукт",
-      text: "Вкус, качество и безопасность наших пирогов подтверждена декларацией о соответствии, которую мы получили 22.06.2016 г."
-    }]
-  public products:ProductType[] = [
-    {
-      image: "maca1.png",
-      title: "Макарун с малиной",
-      amount: 1,
-      price: 1.70,
-    },
-    {
-      image: "maca2.png",
-      title: "Макарун с манго",
-      amount: 1,
-      price: 1.70,
-    },
-    {
-      image: "maca3.png",
-      title: "Пирог с ванилью",
-      amount: 1,
-      price: 1.70,
-    },
-    {
-      image: "maca4.png",
-      title: "Пирог с фисташками",
-      amount: 1,
-      price: 1.70,
-    }
-  ]
+export class AppComponent implements OnInit{
+  constructor(private productService:ProductService, public counterService:CounterService) {
+  }
+  public products:ProductType[] = []
+  ngOnInit(){
+    this.products = this.productService.getProduct()
+  }
+
   public formValues={
     productName: '',
     nameUser: '',
@@ -62,8 +29,18 @@ export class AppComponent {
   public scrollTo(target: HTMLElement):void {
     target.scrollIntoView({behavior: "smooth"});
   }
-  public choseProductInOrder(product:string, element:HTMLElement):void {
+  public choseProductInOrder(product:ProductType, element:HTMLElement):void {
+    this.counterService.countPrice += product.price;
+    if (this.counterService.countPrice){
+      const block:HTMLElement | null = document.getElementById('block__price');
+      if (block){
+        block.style.opacity = '1';
+        block.style.transform = 'translate(0, 0)';
+      }
+    }
+    this.counterService.countProduct++
     this.scrollTo(element);
-    this.formValues.productName = product.toUpperCase();
+    this.formValues.productName = product.title.toUpperCase();
+    alert(product.title + ' добавлен в корзину!')
   }
 }

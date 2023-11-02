@@ -6,12 +6,22 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {FormsModule} from "@angular/forms";
+import { AdvantagesComponent } from './components/advantages/advantages.component';
+import { ProductComponent } from './components/product/product.component';
+import { BackgroundDirective } from './directive/background.directive';
+import { ShortTextPipe } from './pipes/short-text.pipe';
+import { PhoneFormatPipe } from './pipes/phone-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AdvantagesComponent,
+    ProductComponent,
+    BackgroundDirective,
+    ShortTextPipe,
+    PhoneFormatPipe
   ],
   imports: [
     BrowserModule,

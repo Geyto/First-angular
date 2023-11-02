@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import {PhoneService} from "../../services/phone.service";
 
 @Component({
   selector: 'header-component',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  providers:[PhoneService]
 })
 export class HeaderComponent {
-  public phone: string = '+375 (29) 368-98-70'
+  constructor(private phoneService:PhoneService) {
+  }
+  public phone: string = this.phoneService.phone
 }

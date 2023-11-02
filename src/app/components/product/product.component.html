@@ -1,0 +1,16 @@
+<div class="product" >
+  <div class="product__img">
+    <img class="product__img-img" src="assets/img/{{product.image}}" alt="maca">
+  </div>
+  <h3 class="product__title">{{product.title}}</h3>
+  <div class="product__active">
+    <div class="product__price">
+      <p>{{product.amount}} шт.</p>
+      <p>{{product.price | currency:"RUB": " руб. "}}</p>
+    </div>
+    <div class="product__btn">
+      <button class="btn product__btn-btn" appBackground (click)="addProductCard()">Заказать</button>
+    </div>
+  </div>
+</div>
+
